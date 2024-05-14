@@ -1,4 +1,6 @@
 ---
+import BaseLayout from "./BaseLayout.astro";
+
 export interface Props {
   frontmatter: {
     title: string;
@@ -17,20 +19,22 @@ const { frontmatter } = Astro.props;
 const formattedDate = frontmatter.pubDate.slice(0, 10);
 ---
 
-<a href="/blog/">back</a>
+<BaseLayout pageTitle={frontmatter.title}>
+  <p>Published on: {formattedDate}</p>
 
-<h1>{frontmatter.title}</h1>
+  <p><em>{frontmatter.description}</em></p>
 
-<p>Published on: {formattedDate}</p>
+  <p>Written by {frontmatter.author}</p>
 
-<p><em>{frontmatter.description}</em></p>
+  {
+    frontmatter.image && (
+      <img
+        src={frontmatter.image.url}
+        width="300"
+        alt={frontmatter.image.alt}
+      />
+    )
+  }
 
-<p>Written by {frontmatter.author}</p>
-
-{
-  frontmatter.image && (
-    <img src={frontmatter.image.url} width="300" alt={frontmatter.image.alt} />
-  )
-}
-
-<slot />
+  <slot />
+</BaseLayout>
