@@ -2,6 +2,10 @@
 import "../styles/global.css";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
+import BlogPost from "../components/BlogPost.astro";
+import type { Post } from "../types/post.types";
+
+const allPosts = await Astro.glob<Post>("../pages/posts/*.md");
 
 const pageTitle = "My Astro Learning Blog";
 ---
@@ -21,9 +25,11 @@ const pageTitle = "My Astro Learning Blog";
     <p>This is where I will post about my journey learning Astro.</p>
 
     <ul>
-      <li><a href="/posts/post-1/">Post 1</a></li>
-      <li><a href="/posts/post-2/">Post 2</a></li>
-      <li><a href="/posts/post-3/">Post 3</a></li>
+      {
+        allPosts.map((post) => (
+          <BlogPost title={post.frontmatter.title} url={post.url!} />
+        ))
+      }
     </ul>
 
     <Footer />
