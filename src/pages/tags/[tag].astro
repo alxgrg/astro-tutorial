@@ -1,5 +1,5 @@
 ---
-import type { InferGetStaticParamsType, MarkdownInstance } from "astro";
+import type { MarkdownInstance } from "astro";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import type { Post } from "../../types/post.types";
 import BlogPost from "../../components/BlogPost.astro";
@@ -36,6 +36,7 @@ const { posts } = Astro.props;
 ---
 
 <BaseLayout pageTitle={tag}>
+  <a href="/tags/">back to tags index</a>
   <p>Posts tagged with {tag}</p>
   <ul>
     {
