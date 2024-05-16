@@ -1,11 +1,11 @@
 ---
 import "../styles/global.css";
+import { getCollection } from "astro:content";
 import Footer from "../components/Footer.astro";
 import Header from "../components/Header.astro";
 import BlogPost from "../components/BlogPost.astro";
-import type { Post } from "../types/post.types";
 
-const allPosts = await Astro.glob<Post>("../pages/posts/*.md");
+const allPosts = await getCollection("posts");
 
 const pageTitle = "My Astro Learning Blog";
 ---
@@ -27,7 +27,7 @@ const pageTitle = "My Astro Learning Blog";
     <ul>
       {
         allPosts.map((post) => (
-          <BlogPost title={post.frontmatter.title} url={post.url!} />
+          <BlogPost url={`/posts/${post.slug}`} title={post.data.title} />
         ))
       }
     </ul>

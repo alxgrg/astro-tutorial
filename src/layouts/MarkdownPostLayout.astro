@@ -1,34 +1,30 @@
 ---
+import type { CollectionEntry } from "astro:content";
 import Tags from "../components/Tags.astro";
-import type { Post } from "../types/post.types";
 import BaseLayout from "./BaseLayout.astro";
 
 export interface Props {
-  frontmatter: Post;
+  post: CollectionEntry<"posts">;
 }
 
-const { frontmatter } = Astro.props;
-const formattedDate = frontmatter.pubDate.slice(0, 10);
+const { post } = Astro.props;
+const formattedDate = post.data.pubDate.toString().slice(0, 10);
 ---
 
-<BaseLayout pageTitle={frontmatter.title}>
+<BaseLayout pageTitle={post.data.title}>
   <p>Published on: {formattedDate}</p>
 
-  <p><em>{frontmatter.description}</em></p>
+  <p><em>{post.data.description}</em></p>
 
-  <p>Written by {frontmatter.author}</p>
+  <p>Written by {post.data.author}</p>
 
   {
-    frontmatter.image && (
-      <img
-        src={frontmatter.image.url}
-        width="300"
-        alt={frontmatter.image.alt}
-      />
+    post.data.image && (
+      <img src={post.data.image.url} width="300" alt={post.data.image.alt} />
     )
   }
 
-  <Tags tags={frontmatter.tags} />
+  <Tags tags={post.data.tags} />
 
   <slot />
 </BaseLayout>
