@@ -2,6 +2,7 @@
 import type { CollectionEntry } from "astro:content";
 import Tags from "../components/Tags.astro";
 import BaseLayout from "./BaseLayout.astro";
+import { fade } from "astro:transitions";
 
 export interface Props {
   post: CollectionEntry<"posts">;
@@ -14,9 +15,11 @@ const formattedDate = post.data.pubDate.toString().slice(0, 10);
 <BaseLayout pageTitle={post.data.title}>
   <p>Published on: {formattedDate}</p>
 
-  <p><em>{post.data.description}</em></p>
+  <p transition:animate={fade({ duration: "2s" })}>
+    <em>{post.data.description}</em>
+  </p>
 
-  <p>Written by {post.data.author}</p>
+  <p>Written by <a href="/about/">{post.data.author}</a></p>
 
   {
     post.data.image && (

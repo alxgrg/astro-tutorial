@@ -1,40 +1,21 @@
 ---
-import "../styles/global.css";
 import { getCollection } from "astro:content";
-import Footer from "../components/Footer.astro";
-import Header from "../components/Header.astro";
 import BlogPost from "../components/BlogPost.astro";
+import BaseLayout from "../layouts/BaseLayout.astro";
 
 const allPosts = await getCollection("posts");
 
 const pageTitle = "My Astro Learning Blog";
 ---
 
-<html lang="en">
-  <head>
-    <meta charset="utf-8" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <meta name="viewport" content="width=device-width" />
-    <meta name="generator" content={Astro.generator} />
-    <title>{pageTitle}</title>
-  </head>
-  <body>
-    <Header />
+<BaseLayout pageTitle={pageTitle}>
+  <p>This is where I will post about my journey learning Astro.</p>
 
-    <h1>{pageTitle}</h1>
-    <p>This is where I will post about my journey learning Astro.</p>
-
-    <ul>
-      {
-        allPosts.map((post) => (
-          <BlogPost url={`/posts/${post.slug}`} title={post.data.title} />
-        ))
-      }
-    </ul>
-
-    <Footer />
-    <script>
-      import "../scripts/menu.ts";
-    </script>
-  </body>
-</html>
+  <ul>
+    {
+      allPosts.map((post) => (
+        <BlogPost url={`/posts/${post.slug}`} title={post.data.title} />
+      ))
+    }
+  </ul>
+</BaseLayout>
